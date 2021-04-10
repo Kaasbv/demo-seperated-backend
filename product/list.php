@@ -5,7 +5,7 @@ include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 
 //Maak een class aan voor deze api call
-class ProductIndex {
+class ProductList {
   public function run(){
     //Start een connectie
     MysqlHelper::startConnection();
@@ -20,4 +20,4 @@ class ProductIndex {
 }
 
 //Run de run functie hiervan
-ProductIndex::run();
+ProductList::run();
