@@ -11,6 +11,7 @@ class ProductList {
     MysqlHelper::startConnection();
 
     //Haal de models op via de statische functie van de model, verander het in json en echo het
+    header('Content-Type: application/json');
     $products = ProductModel::list();
     echo json_encode($products);
 
