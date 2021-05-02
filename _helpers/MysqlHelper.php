@@ -34,6 +34,30 @@ class MysqlHelper {
     return $response ?? [];
   }
 
+  public static function runPreparedQuery($query, $values, $types){
+    $statement = self::$connection->prepare($query);
+    if(!$statement) {
+      throw new Exception(self::$connection->error, 500);
+    }
+    
+    $statement->bind_param(implode($types), ...$values);
+    if(!$statement) throw new Exception("Failed to bind params", 500);
+
+    $execution = $statement->execute();
+    if($execution){
+      $result = $statement->get_result();
+      if($result){
+        $response = $result->fetch_all(MYSQLI_ASSOC);
+      }
+    }else{
+      throw new Exception("Query failed!" . $statement->error, 500);
+    }
+
+    $statement->close();
+
+    return $response ?? [];
+  }
+  
   private static function grabCredentials(){
     //Check of de credentialfile is aangemaakt
     if(!is_file(self::$credentialPath)){
