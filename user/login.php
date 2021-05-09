@@ -35,6 +35,7 @@ class UserLogin {
     http_response_code(500); //Zet een http code Heel belangrijk!
     $data = ["error" => "Jemoeder"];
     echo json_encode($data); // echo de data array in json formaat voor de frontend
+
     //Sluit de connectie
     MysqlHelper::closeConnection();
   }
