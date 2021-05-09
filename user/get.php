@@ -1,21 +1,27 @@
 <?php
 //Include de 2 bestanden die wij nodig hebben
-// include_once(__DIR__ . "/../_models/ProductModel.php");
+include_once(__DIR__ . "/../_models/UserModel.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
-
 
 //Maak een class aan voor deze api call
 class UserGet {
   public static function run(){
     session_start();
+    if(!isset($_SESSION['username'])) {
+      http_response_code(403);
+      echo "Session doesn't exist";
+      exit;
+    }
+    
     //Start een connectie
     MysqlHelper::startConnection();
 
     //Doe dingen
-    $data = ["error" => "Jemoeder"];
+    header('Content-Type: application/json');
+    $data = UserModel::getByUsername($_SESSION["username"]);
     //Geef een response
-    http_response_code(500); //Zet een http code Heel belangrijk!
-    echo json_encode($data); // echo de data array in json formaat voor de frontend
+    http_response_code(200); //Zet een http code Heel belangrijk!
+    echo json_encode(get_object_vars($data)); // echo de data array in json formaat voor de frontend
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
