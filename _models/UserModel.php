@@ -2,7 +2,6 @@
 //Include de bestanden de wij nodig hebben
 include_once(__DIR__ . "/../_models/Model.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
-include_once(__DIR__ . "/../_models/Model.php");
 
 class UserModel extends Model {
   public string $username;
