@@ -5,14 +5,32 @@ include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 include_once(__DIR__ . "/../_models/Model.php");
 
 class UserModel extends Model {
+  public string $username;
   public string $email;
   public string $firstname;
   public string $middlename;
   public string $lastname;
   public string $birtdate;
-  public string $password;
+  protected string $password;
   public string $date_created;
   public string $date_updated;
+
+  public static function getByUsername($username) {
+    $query = "
+        SELECT * FROM User vm
+        WHERE username = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$username], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
+    $object = new UserModel($data["firstname"], $data["middlename"], $data["lastname"]);
+
+    self::fillObject($object, $data);
+
+    return $object;
+  }
 
   public static function getByEmail($email) {
     $query = "
@@ -41,12 +59,7 @@ class UserModel extends Model {
 
   public function checkPassword($password) {//Controlleren of $password het wachtwoord van de gebruiker is.
     $hash = $this->password;
-    if (password_verify($password, $hash)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return password_verify($password, $hash);
   }
 
   public function changePassword($password){

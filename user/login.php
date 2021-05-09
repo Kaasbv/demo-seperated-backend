@@ -23,13 +23,12 @@ class UserLogin {
     $response = $user->checkPassword($password);
     if ($response){
       echo "Succes!";
-      $_SESSION['email'] = $_POST['email'];
+      $_SESSION['username'] = $user->username;
       http_response_code(200);
     }
     else {
       http_response_code(400);
       echo "incorrect";
-
     }
 
     //Sluit de connectie

@@ -7,7 +7,7 @@ include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 class UserGet {
   public static function run(){
     session_start();
-    if(!isset($_SESSION['email'])) {
+    if(!isset($_SESSION['username'])) {
       http_response_code(403);
       echo "Session doesn't exist";
       exit;
@@ -18,10 +18,10 @@ class UserGet {
 
     //Doe dingen
     header('Content-Type: application/json');
-    $data = UserModel::getByEmail($_SESSION["email"]);
+    $data = UserModel::getByUsername($_SESSION["username"]);
     //Geef een response
     http_response_code(200); //Zet een http code Heel belangrijk!
-    echo json_encode($data); // echo de data array in json formaat voor de frontend
+    echo json_encode(get_object_vars($data)); // echo de data array in json formaat voor de frontend
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
