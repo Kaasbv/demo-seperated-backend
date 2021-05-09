@@ -21,6 +21,7 @@ class UserGet {
     $data = UserModel::getByUsername($_SESSION["username"]);
     //Geef een response
     http_response_code(200); //Zet een http code Heel belangrijk!
+    header('Content-Type: application/json'); //Header om aan te geven dat de response json is
     unset($data->password);
     echo json_encode(get_object_vars($data)); // echo de data array in json formaat voor de frontend
 

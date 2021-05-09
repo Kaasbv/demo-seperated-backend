@@ -11,6 +11,7 @@ class FollowerList {
     MysqlHelper::startConnection();
 
     //Zet hier je code neer
+    header('Content-Type: application/json'); //Header om aan te geven dat de response json is
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
