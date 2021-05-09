@@ -2,6 +2,7 @@
 //Include de bestanden de wij nodig hebben
 include_once(__DIR__ . "/../_models/Model.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+include_once(__DIR__ . "/../_models/Model.php");
 
 class UserModel extends Model {
   public string $email;
@@ -19,8 +20,10 @@ class UserModel extends Model {
         WHERE email = ?
     ";
 
-    [$data] = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
-    
+    $response = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
     $object = new UserModel($data["firstname"], $data["middlename"], $data["lastname"]);
 
     self::fillObject($object, $data);
