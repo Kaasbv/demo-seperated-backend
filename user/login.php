@@ -16,7 +16,7 @@ class UserLogin {
     $password = $_POST['password'];
 
     $user = UserModel::getByEmail($email);
-    if ($user === false){
+    if (!$user){
       echo "incorrect";
       return false;
     }
