@@ -1,5 +1,6 @@
 <?php
 //Include de bestanden de wij nodig hebben
+include_once(__DIR__ . "/../_models/Model.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 include_once(__DIR__ . "/../_models/Model.php");
 
@@ -34,7 +35,7 @@ class UserModel extends Model {
   public function create(){
       $query = "
           INSERT INTO User
-          (username, email, firstname, middlename, lastname, birtdate, password)
+          (username, email, firstname, middlename, lastname, birthdate, password)
           VALUES(?, ?, ?, ?, ?, ?, ?);
       ";
 
@@ -50,14 +51,33 @@ class UserModel extends Model {
 
   }
 
+  public static function getByUsername($username) {
+    $query = "
+        SELECT * FROM User vm
+        WHERE username = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$username], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
+    $object = new UserModel($data["firstname"], $data["middlename"], $data["lastname"]);
+
+    self::fillObject($object, $data);
+
+    return $object;
+  }
+
   public static function getByEmail($email) {
     $query = "
         SELECT * FROM User vm
         WHERE email = ?
     ";
 
-    [$data] = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
-    
+    $response = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
     $object = new UserModel($data["firstname"], $data["middlename"], $data["lastname"]);
 
     self::fillObject($object, $data);
@@ -75,12 +95,7 @@ class UserModel extends Model {
 
   public function checkPassword($password) {//Controlleren of $password het wachtwoord van de gebruiker is.
     $hash = $this->password;
-    if (password_verify($password, $hash)) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return password_verify($password, $hash);
   }
 
   public function changePassword($password){
