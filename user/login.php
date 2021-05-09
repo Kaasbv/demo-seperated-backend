@@ -16,25 +16,24 @@ class UserLogin {
     $password = $_POST['password'];
 
     $user = UserModel::getByEmail($email);
-    if (!isset($user)){
+    if ($user === false){
       echo "incorrect";
       return false;
     }
     $response = $user->checkPassword($password);
-    if ($response === true){
+    if ($response){
       echo "Succes!";
-      $_SESSION['email'] = $POST['user'];
+      $_SESSION['email'] = $_POST['email'];
       http_response_code(200);
     }
-    else if ($response === false ){
+    else {
       http_response_code(400);
-      echo "incorrect password";
+      echo "incorrect";
 
     }
     //Geef een response
     http_response_code(500); //Zet een http code Heel belangrijk!
-    $data = ["error" => "Jemoeder"];
-    echo json_encode($data); // echo de data array in json formaat voor de frontend
+    //echo json_encode($data); // echo de data array in json formaat voor de frontend
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
