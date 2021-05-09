@@ -11,7 +11,7 @@ class UserModel extends Model {
   public string $middlename;
   public string $lastname;
   public string $birthdate;
-  protected string $password;
+  public string $password;
   public string $date_created;
   public string $date_updated;
 
