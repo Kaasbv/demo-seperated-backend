@@ -1,6 +1,7 @@
 <?php
 //Include de bestanden de wij nodig hebben
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+include_once(__DIR__ . "/../_models/Model.php");
 
 class UserModel extends Model {
   public string $email;
@@ -8,7 +9,7 @@ class UserModel extends Model {
   public string $middlename;
   public string $lastname;
   public string $birtdate;
-  private string $password;
+  public string $password;
   public string $date_created;
   public string $date_updated;
 
