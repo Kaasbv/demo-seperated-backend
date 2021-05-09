@@ -1,16 +1,61 @@
 <?php
 //Include de bestanden de wij nodig hebben
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+include_once(__DIR__ . "/../_models/Model.php");
 
 class UserModel extends Model {
+  public string $username;
   public string $email;
   public string $firstname;
   public string $middlename;
   public string $lastname;
-  public string $birtdate;
-  private string $password;
+  public string $birthdate;
+  public string $password;
   public string $date_created;
   public string $date_updated;
+
+  public static function checkIfMailExists($email){
+    $checkquery = "SELECT * FROM User WHERE email = ?";
+    $sql = MysqlHelper::runPreparedQuery($checkquery, [$email], ["s"]);
+
+    if(empty($sql)){
+     return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  public static function checkIfUserExists($username){
+    $checkquery = "SELECT * FROM User WHERE username = ?";
+    $sql = MysqlHelper::runPreparedQuery($checkquery, [$username], ["s"]);
+
+    if(empty($sql)){
+     return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  public function create(){
+      $query = "
+          INSERT INTO User
+          (username, email, firstname, middlename, lastname, birtdate, password)
+          VALUES(?, ?, ?, ?, ?, ?, ?);
+      ";
+
+      MysqlHelper::runPreparedQuery($query, [
+          $this->username,
+          $this->email,
+          $this->firstname,
+          $this->middlename,
+          $this->lastname,
+          $this->birthdate,
+          $this->password
+      ], ["s", "s", "s", "s", "s", "s", "s"]);
+
+  }
 
   public static function getByEmail($email) {
     $query = "
