@@ -42,7 +42,7 @@ class UserModel extends Model {
   public function create(){
       $query = "
           INSERT INTO User
-          (username, email, firstname, middlename, lastname, birtdate, password)
+          (username, email, firstname, middlename, lastname, birthdate, password)
           VALUES(?, ?, ?, ?, ?, ?, ?);
       ";
 
