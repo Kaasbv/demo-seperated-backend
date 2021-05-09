@@ -11,6 +11,7 @@ class UserRegister {
         
     MysqlHelper::startConnection();
     
+    //POST variabelen ophalen
     $email = $_POST['email'];
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
@@ -19,6 +20,7 @@ class UserRegister {
     $password = $_POST['password'];
     $middlename = $_POST["middlename"] ?? "";
 
+    //Check of gebruiker en email bestaat
     $mailexists = userModel::checkIfMailExists($email);
     $userexists = userModel::checkIfUserExists($username);
     if($userexists === true){
@@ -32,19 +34,21 @@ class UserRegister {
       http_response_code(400);
     }
     else{
+    //Hash en salt het wachtwoord
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    //Doe dingen
+    //Maak usermodel aan
     $user = new UserModel($firstname, $middlename, $lastname);
     $user->email = $email;
     $user->birthdate = $birthdate;
     $user->password = $password;
     $user->username = $username;
 
+    //Voer create functie uit, insert op database
     $user->create();
     $data = ["execution" => 'success', 'msg' => 'New user created'];
-    //Geef een response
 
+    //Geef een response
     http_response_code(200); //Zet een http code Heel belangrijk!
     echo json_encode($data); // echo de data array in json formaat voor de frontend
     

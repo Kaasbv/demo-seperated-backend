@@ -14,13 +14,15 @@ class UserModel extends Model {
   public string $date_created;
   public string $date_updated;
 
+  //Check of meegegeven email al in de user tabel bestaat
   public static function checkIfMailExists($email){
     $checkquery = "SELECT * FROM User WHERE email = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$email], ["s"]);
 
     return empty($sql);
   }
-
+  
+  //Check of meegegeven username al in de tabel bestaat
   public static function checkIfUserExists($username){
     $checkquery = "SELECT * FROM User WHERE username = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$username], ["s"]);
@@ -28,6 +30,7 @@ class UserModel extends Model {
     return empty($sql);
   }
 
+  //Insert een nieuwe gebruiker in de user tabel
   public function create(){
       $query = "
           INSERT INTO User
