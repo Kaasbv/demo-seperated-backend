@@ -21,14 +21,12 @@ class UserRegister {
     $middlename = $_POST["middlename"] ?? "";
 
     //Check of gebruiker en email bestaat
-    $mailexists = userModel::checkIfMailExists($email);
-    $userexists = userModel::checkIfUserExists($username);
-    if($userexists === true){
+    if(userModel::checkIfUserExists($username)){
       $data = ["execution" => 'failure', 'msg' => 'User already exists'];
       echo json_encode($data);
       http_response_code(400);
     }
-    elseif($mailexists === true){
+    elseif(userModel::checkIfMailExists($email)){
       $data = ["execution" => 'failure', 'msg' => 'Mail already exists'];
       echo json_encode($data);
       http_response_code(400);
