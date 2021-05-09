@@ -19,7 +19,8 @@ class UserModel extends Model {
         WHERE email = ?
     ";
 
-    [$data] = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
+    $data = MysqlHelper::runPreparedQuery($query, [$email], ["s"]);
+    if(empty($data)) return false;
     
     $object = new UserModel($data["firstname"], $data["middlename"], $data["lastname"]);
 
