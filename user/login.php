@@ -17,14 +17,15 @@ class UserLogin {
 
     $user = UserModel::getByEmail($email);
     if (!$user){
+      http_response_code(400);
       echo "incorrect";
       return false;
     }
     $response = $user->checkPassword($password);
     if ($response){
+      http_response_code(200);
       echo "Succes!";
       $_SESSION['username'] = $user->username;
-      http_response_code(200);
     }
     else {
       http_response_code(400);
