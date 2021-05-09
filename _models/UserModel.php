@@ -18,24 +18,14 @@ class UserModel extends Model {
     $checkquery = "SELECT * FROM User WHERE email = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$email], ["s"]);
 
-    if(empty($sql)){
-     return false;
-    }
-    else{
-      return true;
-    }
+    return empty($sql);
   }
 
   public static function checkIfUserExists($username){
     $checkquery = "SELECT * FROM User WHERE username = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$username], ["s"]);
 
-    if(empty($sql)){
-     return false;
-    }
-    else{
-      return true;
-    }
+    return empty($sql);
   }
 
   public function create(){

@@ -15,31 +15,21 @@ class UserRegister {
     $username = $_POST['username'];
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
-    $birthdate = ''.$_POST['birthdate'].'';
+    $birthdate = $_POST['birthdate'];
     $password = $_POST['password'];
-    if(!isset($POST['middlename'])){
-      $middlename = "";
-    }
-    else{
-      $middlename = $_POST['middlename'];
-    }
-    var_dump($email);
+    $middlename = $_POST["middlename"] ?? "";
+
     $mailexists = userModel::checkIfMailExists($email);
     $userexists = userModel::checkIfUserExists($username);
-    if($mailexists === true || $userexists === true){
-      MysqlHelper::closeconnection();
-    }
-    if($mailexists === true && $userexists === true){
-      $data = ["msg" => 'failure', "username" => $username, "email" => $email, "firstname" => $firstname, "lastname" => $lastname, 'execution' => 'User and mail already exist'];
+    if($userexists === true){
+      $data = ["execution" => 'failure', 'msg' => 'User already exists'];
       echo json_encode($data);
+      http_response_code(400);
     }
     elseif($mailexists === true){
-      $data = ["msg" => 'failure', "username" => $username, "email" => $email, "firstname" => $firstname, "lastname" => $lastname, 'execution' => 'Mail already exists'];
+      $data = ["execution" => 'failure', 'msg' => 'Mail already exists'];
       echo json_encode($data);
-    }
-    elseif($userexists === true){
-      $data = ["msg" => 'failure', "username" => $username, "email" => $email, "firstname" => $firstname, "lastname" => $lastname, 'execution' => 'User already exists'];
-      echo json_encode($data);
+      http_response_code(400);
     }
     else{
     $password = password_hash($password, PASSWORD_DEFAULT);
@@ -52,15 +42,15 @@ class UserRegister {
     $user->username = $username;
 
     $user->create();
-    $data = ["msg" => 'success', "username" => $username, "email" => $email, "firstname" => $firstname, "lastname" => $lastname, 'execution' => 'New user created'];
+    $data = ["execution" => 'success', 'msg' => 'New user created'];
     //Geef een response
 
     http_response_code(200); //Zet een http code Heel belangrijk!
     echo json_encode($data); // echo de data array in json formaat voor de frontend
     
-    //Sluit de connectie
-    MysqlHelper::closeConnection();
   }
+  //Sluit de connectie
+  MysqlHelper::closeConnection();
   }
 }
 
