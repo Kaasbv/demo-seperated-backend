@@ -7,7 +7,7 @@ class CategoryModel extends Model {
   
   public function __construct(
     public string $name,
-    public string $user_email
+    public string $username
   ){}
   public string $date_created;
   public string $date_updated;
