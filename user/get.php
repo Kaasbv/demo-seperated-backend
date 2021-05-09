@@ -1,9 +1,7 @@
 <?php
 //Include de 2 bestanden die wij nodig hebben
-include_once(__DIR__ . "/../_models/Model.php");
 include_once(__DIR__ . "/../_models/UserModel.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
-
 
 //Maak een class aan voor deze api call
 class UserGet {
