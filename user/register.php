@@ -23,13 +23,13 @@ class UserRegister {
     //Check of gebruiker en email bestaat
     if(userModel::checkIfUserExists($username)){
       $data = ["execution" => 'failure', 'msg' => 'User already exists'];
-      echo json_encode($data);
       http_response_code(400);
+      echo json_encode($data);
     }
     elseif(userModel::checkIfMailExists($email)){
       $data = ["execution" => 'failure', 'msg' => 'Mail already exists'];
-      echo json_encode($data);
       http_response_code(400);
+      echo json_encode($data);
     }
     else{
     //Hash en salt het wachtwoord

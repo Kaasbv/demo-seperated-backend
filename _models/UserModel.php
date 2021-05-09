@@ -19,8 +19,8 @@ class UserModel extends Model {
   public static function checkIfMailExists($email){
     $checkquery = "SELECT * FROM User WHERE email = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$email], ["s"]);
-
-    return empty($sql);
+    
+    return !empty($sql);
   }
   
   //Check of meegegeven username al in de tabel bestaat
@@ -28,7 +28,7 @@ class UserModel extends Model {
     $checkquery = "SELECT * FROM User WHERE username = ?";
     $sql = MysqlHelper::runPreparedQuery($checkquery, [$username], ["s"]);
 
-    return empty($sql);
+    return !empty($sql);
   }
 
   //Insert een nieuwe gebruiker in de user tabel
