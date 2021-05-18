@@ -43,13 +43,9 @@ class FollowerModel extends Model {
       $object->date_created = $row["date_created"];
 
       $objectArray[] = $object;
-
-
     }
 
     return $objectArray;
-
-
   }
 }
 

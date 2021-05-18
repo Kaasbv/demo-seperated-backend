@@ -71,7 +71,6 @@ class UserModel extends Model {
   public function listFollowers(){
     $followers = FollowerModel::listByUsername($this->username);
     return $followers ? $followers : [];
-
   }
 
   public static function getByEmail($email) {
