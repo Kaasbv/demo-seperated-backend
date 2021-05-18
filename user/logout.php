@@ -2,11 +2,12 @@
 //Maak een class aan voor deze api call
 class UserLogout {
   public static function run(){
-
-    /* Doe dingen */
-
+    session_start();
+    session_destroy(); 
   }
 }
 
 //Run de run functie hiervan
-UserUpdate::run();
+UserLogout::run();
+
+
