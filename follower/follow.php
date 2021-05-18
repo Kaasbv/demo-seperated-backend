@@ -11,6 +11,7 @@ class FollowerFollow {
     MysqlHelper::startConnection();
 
     //Zet hier je code neer
+    
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
