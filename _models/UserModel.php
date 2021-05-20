@@ -2,6 +2,7 @@
 //Include de bestanden de wij nodig hebben
 include_once(__DIR__ . "/../_models/Model.php");
 include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+include_once(__DIR__ . "/../_models/FollowerModel.php");
 
 class UserModel extends Model {
   public string $username;
@@ -65,6 +66,11 @@ class UserModel extends Model {
     self::fillObject($object, $data);
 
     return $object;
+  }
+
+  public function listFollowers(){
+    $followers = FollowerModel::listByUsername($this->username);
+    return $followers ? $followers : [];
   }
 
   public static function getByEmail($email) {

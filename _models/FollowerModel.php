@@ -28,6 +28,25 @@ class FollowerModel extends Model {
 
     return $object;
   }
+  public static function listByUsername($username) {
+    $query = "
+        SELECT * FROM Followers
+        WHERE username = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$username], ["s"]);
+    if(empty($response)) return false;
+
+    $objectArray = [];
+    foreach  ($response as $row) {
+      $object = new FollowerModel($row["username"], $row["username_following"]);
+      $object->date_created = $row["date_created"];
+
+      $objectArray[] = $object;
+    }
+
+    return $objectArray;
+  }
 }
 
 ?>
