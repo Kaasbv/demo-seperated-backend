@@ -11,6 +11,19 @@ class FollowerModel extends Model {
   ){}
   public string $date_created;
   
+  public static function create(){
+    $query = "
+    INSERT INTO goalr.Followers
+    (username, username_following, date_created)
+    VALUES (?, ?, ?);
+    ";
+
+    MysqlHelper::runPreparedQuery($query, [
+      $this->username,
+      $this->username_following,
+      $this->date_created
+    ], ["s", "s", "s"]);
+  }
 
   public static function getByUsernames($username, $username_following) {
     $query = "
