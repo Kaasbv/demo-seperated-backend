@@ -11,6 +11,7 @@ class UserRegister {
         
     MysqlHelper::startConnection();
     
+    header('Content-Type: application/json'); //Header om aan te geven dat de response json is
     //POST variabelen ophalen
     $email = $_POST['email'];
     $username = $_POST['username'];
