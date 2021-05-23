@@ -43,8 +43,9 @@ class UserModel extends Model {
         $this->middlename,
         $this->lastname,
         $this->birthdate,
-        $this->password
-    ], ["s", "s", "s", "s", "s", "s", "s"]);
+        $this->password,
+        $this->username
+    ], ["s", "s", "s", "s", "s", "s","s"]);
     
   }
 
