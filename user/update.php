@@ -22,14 +22,17 @@ class UserUpdate {
     $usermodel = UserModel::getByUserName($user);
 
   $possibleKeys = ["email", "firstname", "middlename", "lastname", "birthdate", "password"];
+
   foreach($possibleKeys as $key){
-    //Als het een wachtwoord is
-    if($key === "password" && isset($_POST["password"])){
-      //Hash het wachtwoord en spreek het model aan
-      $usermodel->{$key} = password_hash($_POST[$key],PASSWORD_DEFAULT);
+    if(isset($_POST[$key])){
+      //Als het een wachtwoord is
+      if($key === "password"){
+        //Hash het wachtwoord en spreek het model aan
+        $usermodel->{$key} = password_hash($_POST[$key],PASSWORD_DEFAULT);
+      }
+      //spreek het model aan
+      else $usermodel->{$key} = $_POST[$key];
     }
-    //spreek het model aan
-    elseif(isset($_POST[$key])) $usermodel->{$key} = $_POST[$key];
   } 
 
   $usermodel->update();
