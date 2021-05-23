@@ -31,6 +31,24 @@ class UserModel extends Model {
     return !empty($sql);
   }
 
+  //Update een gebruiker
+  public function update(){
+    $query = "
+      UPDATE User SET email = ?, firstname = ?, middlename = ?, lastname = ?, birthdate = ?, password = ? WHERE username = ?";
+      
+      MysqlHelper::runPreparedQuery($query, [
+        $this->email,
+        $this->firstname,
+        $this->middlename,
+        $this->lastname,
+        $this->birthdate,
+        $this->password,
+        $this->username
+    ], ["s", "s", "s", "s", "s", "s","s"]);
+    
+  }
+
+
   //Insert een nieuwe gebruiker in de user tabel
   public function create(){
       $query = "
