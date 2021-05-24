@@ -18,9 +18,15 @@ class CategoryList {
       exit;
     }
 
+    header('Content-Type: application/json');
     $user = UserModel::getByUsername($_SESSION['username']);
-    $in_json = $user->listCategory(); 
-    echo json_encode($in_json);
+    $categories = $user->listCategory(); 
+
+    foreach($categories as $category){
+      $names[] = $category->name;
+    }
+
+    echo json_encode($names);
 
     //Sluit de connectie
     MysqlHelper::closeConnection();

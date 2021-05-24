@@ -20,20 +20,14 @@ class CategoryModel extends Model {
     $response = MysqlHelper::runPreparedQuery($category_query, [$username], ["s"]);
     if(empty($response)) return false;
 
-    foreach($response as $data){
-      
-      $object = $data;
-    }
     
-
-    $object = new CategoryModel($data["username"], $data["name"]);
-    self::fillObject($object, $data);
-    /*foreach($response as $row){
+    foreach($response as $row){
       $object = new CategoryModel($row['username'], $row['name']);
+      self::fillObject($object, $row);
       $data[] = $object;
-    }*/
+    }
 
-    return $object;
+    return $data;
   }
 }
 
