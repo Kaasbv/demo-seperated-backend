@@ -132,6 +132,15 @@ class UserModel extends Model {
 
     MysqlHelper::runPreparedQuery($query, [$hash, $this->email], ["s", "s"]);
   }
+
+  public function listCategory(){
+    $username = CategoryModel::listByUsername($this->username);
+    if (!$username){
+      return [];
+    } else {
+      return $username;
+    }
+  }
 }
 
 ?>
