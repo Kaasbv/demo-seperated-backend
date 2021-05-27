@@ -11,6 +11,15 @@ class CategoryCreate {
     MysqlHelper::startConnection();
 
     //Zet hier je code neer
+    if(!isset($_SESSION['username'])) {
+      http_response_code(403);
+      echo "Session doesn't exist";
+      exit;
+    }
+    
+    $object = new CategoryModel($_POST['name'], $_SESSION['username']);
+
+    $object->create();
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
