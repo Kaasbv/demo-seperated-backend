@@ -9,8 +9,39 @@ class FollowerUnfollow {
     session_start();
     //Start een connectie
     MysqlHelper::startConnection();
-
+    
     //Zet hier je code neer
+    //Model ophalen
+    $MyExFriend = FollowerModel::getByUsernames($_POST['userYou'], $_POST['username']);/////////////////om te testen met postman, wordt $_SESSION['username']
+    
+    // $username = $_POST['userYou']; //om te testen met postman, wordt $_SESSION['username']
+    // $username_following = $_POST['username'];
+    
+    //     //De query voor het ontvolgen.
+    // $sql = "DELETE FROM goalr.Followers WHERE username = ':UN' and username_following = ':UNF';";
+
+    //     //Query voorbereiden om sql-injection te voorkomen.
+    // $query = MysqlHelper::runQuery($sql);
+    // $query->bind_param(':UN', $username);
+    // $query->bind_param(':UNF', $username_following);
+
+    //     //een melding naar de gebruiker sturen dat er is ontvolgt.
+    // echo "$username_following has been unfollowed.";
+
+    //    //De actie daadwerkelijk doorvoeren.
+    // $query->execute();
+
+    //Bestaad de Sessie?
+    if(!isset($_POST['userYou'])) {/////////////////om te testen met postman, wordt $_SESSION['username']
+      http_response_code(403);
+      echo "Session doesn't exist";
+      exit;
+    }
+
+    if($MyFriends === false){
+      http_response_code(404);
+      echo "I don't tink so, that's not your friend! \n This record does not exist in the FollowerModel of the GoalrDB.";
+    }
 
     //Sluit de connectie
     MysqlHelper::closeConnection();

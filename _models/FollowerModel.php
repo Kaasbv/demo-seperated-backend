@@ -28,6 +28,12 @@ class FollowerModel extends Model {
 
     return $object;
   }
+
+  public function deleteFriendInstance(){
+    
+  }
+
+
   public static function listByUsername($username) {
     $query = "
         SELECT * FROM Followers
@@ -43,6 +49,7 @@ class FollowerModel extends Model {
       $object->date_created = $row["date_created"];
 
       $objectArray[] = $object;
+
     }
 
     return $objectArray;
