@@ -33,7 +33,6 @@ class CategoryModel extends Model {
       $query = "INSERT INTO `Category` (name, username) VALUES (?, ?) ";
   
       MysqlHelper::runPreparedQuery($query, [$this->name, $this->username], ["s", "s"]);
-  
     }
 }
 
