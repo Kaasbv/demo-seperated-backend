@@ -17,17 +17,19 @@ class FollowerFollow {
     MysqlHelper::startConnection();
 
     //Zet hier je code neer
-    header('Content-Type: application/json');
-    $data = UserModel::getByUsername($_SESSION["username"]);
-    //$username = $_POST[$_SESSION['username']];
-    //$username_following = $_POST[$_SESSION['username_following']];
-    //$sql = "INSERT INTO goalr.Followers (username, username_following, date_created) VALUES ("$username","$username_following","$date_created")";
-    //$query = $db->prepare($sql);
+    $follow = new FollowerModel($_SESSION["username"], $_POST["username"]);
 
+    try {
+      $follow->create();
+    }
+
+    catch (Exception $e) {
+      http_response_code(500);
+      echo $e->getMessage();
+      exit;
+    }
+  
     http_response_code(204);
-    echo "username_following is now followed."
-
-    //$query->execute();
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
