@@ -22,7 +22,7 @@ class CategoryCreate {
     
     //spreek de create functie aan in deze class
     try {
-    $object->create();
+      $object->create();
     }
 
     //error handling 
