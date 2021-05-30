@@ -19,13 +19,22 @@ class CategoryCreate {
 
     //maak een nieuwe instantie aan van de class (middels de __construct method)
     $object = new CategoryModel($_POST['name'], $_SESSION['username']);
+    
     //spreek de create functie aan in deze class
+    try {
     $object->create();
+    }
+
+    //error handling 
+    catch (Exception $e) {
+      http_response_code(500);
+      echo $e->getMessage();
+      exit;
+    }
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
   }
 }
-
 //Run de run functie hiervan
 CategoryCreate::run();
