@@ -26,11 +26,15 @@ class FollowerUnfollow {
     if($MyExFriend === false){
       http_response_code(404);
       echo "I don't tink so, that's not your friend! \n This record does not exist in the FollowerModel of the GoalrDB.";
+      exit;
     }
 
     var_dump($MyExFriend);
 
-    //verwijder de instantie die overeenkomt met het opgehaalde model
+    //verwijder de instantie die overeenkomt met het opgehaalde model en geef een melding.
+    $MyExFriend->delete();
+    $par_POST = $_POST['username'];
+    echo "Well $par_POST ain't your friend no more!";
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
