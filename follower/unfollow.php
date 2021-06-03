@@ -23,7 +23,7 @@ class FollowerUnfollow {
     $myExFriend = FollowerModel::getByUsernames($_SESSION['username'], $_POST['username']);
     
     //Checken of het opgehaalde model valide is
-    if($myExFriend === false){
+    if(!$myExFriend){
       http_response_code(404);
       exit;
     }
