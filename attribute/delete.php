@@ -16,6 +16,7 @@ class AttributeDelete {
       echo "Session doesn't exist";
       exit;
     }
+
     //Check input 
     if(!isset($_POST["name"]) || !isset($_POST["id_goal"])){
       header('Content-Type: application/json');
@@ -37,6 +38,7 @@ class AttributeDelete {
       echo json_encode($response);
       exit;
     }
+    
     //delete
     $attributeModel->delete();
 
