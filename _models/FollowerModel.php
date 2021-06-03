@@ -37,7 +37,6 @@ class FollowerModel extends Model {
     ";
     
     MysqlHelper::runPreparedQuery($query, [$this->username, $this->username_following], ["s", "s"]);
-    
   }
 
 
@@ -56,7 +55,6 @@ class FollowerModel extends Model {
       $object->date_created = $row["date_created"];
 
       $objectArray[] = $object;
-
     }
 
     return $objectArray;
