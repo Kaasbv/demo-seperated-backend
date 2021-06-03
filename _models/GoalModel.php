@@ -20,6 +20,22 @@ class GoalModel extends Model {
   public string $date_created;
   public string $date_updated;
 
+  public static function getByGoalId($ID_goal){
+    $query = "
+      SELECT * FROM Goal
+      WHERE ID_goal = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$ID_goal], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
+    $object = new GoalModel($data["username"], $data["name"], $data["type"] ?? "");
+    self::fillObject($object, $data);
+
+    return $object;
+  }
+
   public static function listByUsername($username, $filters) {
     $query = "
         SELECT * FROM Goal
