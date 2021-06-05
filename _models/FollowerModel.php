@@ -40,6 +40,18 @@ class FollowerModel extends Model {
 
     return $object;
   }
+
+  public function delete(){
+    $query = "
+        DELETE FROM Followers
+        WHERE username = ?
+        AND username_following = ?
+    ";
+    
+    MysqlHelper::runPreparedQuery($query, [$this->username, $this->username_following], ["s", "s"]);
+  }
+
+
   public static function listByUsername($username) {
     $query = "
         SELECT * FROM Followers
