@@ -18,7 +18,11 @@ class GoalList {
     
     $goals = GoalModel::listByUsername($_SESSION["username"], $_GET);
     if(!$goals) $goals = [];
-    $tree = self::generateTree($goals);
+    if(!isset($_GET["parent_id"])){
+      $tree = self::generateTree($goals);
+    }else{
+      $tree = $goals;
+    }
 
     header('Content-Type: application/json'); //Header om aan te geven dat de response json is
     echo json_encode($tree);

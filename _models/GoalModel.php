@@ -33,19 +33,17 @@ class GoalModel extends Model {
     //Check for filters and if so add them
     if(isset($filters["parent_id"])){
       $whereStatements[] = "parent_goal_id = ?";
-      $queryValues[] = $filters["parent_id"];
+      $queryValues[] = intval($filters["parent_id"]);
       $queryTypes[] = "i";
     }
-
+    
     //Check if where is filled and if so create sql for it
     if(!empty($whereStatements)){
       $whereString = implode(" AND ", $whereStatements);
       $query .= "WHERE {$whereString}";
     }
-
     //Add order
     $query .= " ORDER BY parent_goal_id asc";
-
     $response = MysqlHelper::runPreparedQuery($query, $queryValues, $queryTypes);
     if(empty($response)) return false;
 
