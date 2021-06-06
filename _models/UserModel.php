@@ -141,6 +141,32 @@ class UserModel extends Model {
       return $username;
     }
   }
+
+  public static function search($search){
+    $search = "%" . $search . "%";
+
+    $query = "
+      SELECT * FROM User
+      WHERE username LIKE ?
+    ";
+
+    $results = MysqlHelper::runPreparedQuery($query, [$search], ["s"]);
+    $count = count($results);
+    if($count == 0) {
+      return false;
+    }
+
+    $models = [];
+
+    foreach($results as $row){
+      $model = new UserModel($row["firstname"], $row["middlename"], $row["lastname"]);
+      self::fillObject($model, $row);
+
+      array_push($models, $model);
+    }
+
+    return $models;
+  }
 }
 
 ?>
