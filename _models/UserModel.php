@@ -14,6 +14,7 @@ class UserModel extends Model {
   public string $password;
   public string $date_created;
   public string $date_updated;
+  public string $pf_path;
 
   //Check of meegegeven email al in de user tabel bestaat
   public static function checkIfMailExists($email){
