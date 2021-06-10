@@ -19,12 +19,14 @@ class GoalCreate {
     //Start een connectie
     MysqlHelper::startConnection();
 
+    //Header om aan te geven dat de response json is
+    header('Content-Type: application/json');
+    
     //check input for required keys
     foreach(self::$requiredKeys as $requiredKey){
       if(!isset($_POST[$requiredKey])){
         $response = ["message" => "Missing a required key of " . implode(", ", self::$requiredKeys)];
         http_response_code(400);
-        header('Content-Type: application/json');
         echo json_encode($response);
         exit;
       }
@@ -36,7 +38,6 @@ class GoalCreate {
       if(!in_array($key, $allKeys)){
         $response = ["message" => "Key is not allowed bro: {$key}"];
         http_response_code(400);
-        header('Content-Type: application/json');
         echo json_encode($response);
         exit;
       }
@@ -47,7 +48,6 @@ class GoalCreate {
     $goal->create();
     
 
-    header('Content-Type: application/json'); //Header om aan te geven dat de response json is
     echo json_encode($goal);
 
     //Sluit de connectie
