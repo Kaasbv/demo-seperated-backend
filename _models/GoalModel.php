@@ -13,12 +13,31 @@ class GoalModel extends Model {
 
   public int $ID_goal;
   public int $parent_goal_id = 1; //Default oppergoal
-  public string $kudos;
+  public int $kudos = 0;
   public string $status = "todo";
-  public string $start_date;
+  public string $start_date = "1970-1-1";
   public string $end_date;
   public string $date_created;
   public string $date_updated;
+
+  public function create(){
+    $query = "
+      INSERT INTO Goal
+      (username, parent_goal_id, name, kudos, `type`, status, start_date, end_date)
+      VALUES(?, ?, ?, ?, ?, ?, ?, ?);    
+    ";
+
+    MysqlHelper::runPreparedQuery($query, [
+      $this->username,
+      $this->parent_goal_id,
+      $this->name,
+      $this->kudos,
+      $this->type,
+      $this->status,
+      $this->start_date,
+      $this->end_date
+    ], ["s", "i", "s", "i", "s", "s", "s", "s"]);
+  }
 
   public static function getByGoalId($ID_goal){
     $query = "
