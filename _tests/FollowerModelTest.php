@@ -106,7 +106,7 @@ final class FollowerModelTest extends ModelTestCase
     $followers = FollowerModel::listByUsername($username);
     //Run tests
     $this->assertIsArray($followers);
-    $this->assertEmpty($followers);
+    $this->assertNotEmpty($followers);
     $this->assertEquals(count($followers), 2);
     //Check per record
     $foundUsernames = [];
