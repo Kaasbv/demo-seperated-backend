@@ -11,6 +11,7 @@ jobs:
         with:
           args: --coverage-text
           configuration: phpunit.xml
+          php_extensions: mysqli
         env:
           IS_GITHUB: true
           USERNAME: goalr
