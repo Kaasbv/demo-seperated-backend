@@ -7,6 +7,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: php-actions/composer@v5
       - name: PHPUnit Tests
-        uses: php-actions/phpunit@v2
+        uses: php-actions/phpunit@v3
         with:
-          args: _tests --coverage-text
+          args: --coverage-text
+          configuration: phpunit.xml
+        env:
+          IS_GITHUB: true
+          USERNAME: goalr
+          PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          NAME: goalr
+          HOST: ${{ secrets.DATABASE_HOST }}
