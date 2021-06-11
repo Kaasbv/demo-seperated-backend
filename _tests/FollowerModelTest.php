@@ -106,7 +106,7 @@ final class FollowerModelTest extends ModelTestCase
     $followers = FollowerModel::listByUsername($username);
     //Run tests
     $this->assertIsArray($followers);
-    $this->assertNotEmpty($followers);
+    $this->assertEmpty($followers);
     $this->assertEquals(count($followers), 2);
     //Check per record
     $foundUsernames = [];
@@ -117,9 +117,7 @@ final class FollowerModelTest extends ModelTestCase
       $this->assertContains($follower->username_following, $usernamesFollowings);
       $foundUsernames[] = $follower->username_following;
     }
-    var_dump($usernamesFollowings, $foundUsernames);
     $this->assertEqualsCanonicalizing($usernamesFollowings, $foundUsernames);
-
   }
 
   public function tearDown(): void
