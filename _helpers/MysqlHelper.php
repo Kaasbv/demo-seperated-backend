@@ -50,7 +50,7 @@ class MysqlHelper {
         $response = $result->fetch_all(MYSQLI_ASSOC);
       }
     }else{
-      throw new Exception("Query failed!" . $statement->error, 500);
+      throw new Exception("Query failed! " . $statement->error, 500);
     }
 
     $statement->close();
@@ -59,6 +59,15 @@ class MysqlHelper {
   }
   
   private static function grabCredentials(){
+    //Check for github CI
+    if(isset($_ENV["IS_GITHUB"]) && $_ENV["IS_GITHUB"] === "true"){
+      return (object)[
+        "databaseUsername" => $_ENV["USERNAME"],
+        "databasePassword" => $_ENV["PASSWORD"],
+        "databaseName" => $_ENV["NAME"],
+        "databaseHost" => $_ENV["HOST"],
+      ];
+    }
     //Check of de credentialfile is aangemaakt
     if(!is_file(self::$credentialPath)){
       throw new Exception("Credential file missing", 500);

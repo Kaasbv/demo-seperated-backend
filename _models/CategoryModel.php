@@ -27,6 +27,13 @@ class CategoryModel extends Model {
 
     return $data;
   }
+
+    // Nieuwe category opslaan in DB
+    public function create(){
+      $query = "INSERT INTO `Category` (name, username) VALUES (?, ?) ";
+  
+      MysqlHelper::runPreparedQuery($query, [$this->name, $this->username], ["s", "s"]);
+    }
 }
 
 ?>
