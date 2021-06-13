@@ -150,7 +150,7 @@ class UserModel extends Model {
       WHERE email = ?
     ";
     
-    MysqlHelper::runPreparedQuery($query, [$target_file, $email], ["s", "s"]);
+    MysqlHelper::runPreparedQuery($query, [$target_file, $this->email], ["s", "s"]);
   }
 
   public static function search($search){
