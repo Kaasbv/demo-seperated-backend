@@ -143,6 +143,16 @@ class UserModel extends Model {
     }
   }
 
+  public function uploadImage($target_file){
+    $query = "
+      UPDATE User
+      SET pf_path = ?
+      WHERE email = ?
+    ";
+    
+    MysqlHelper::runPreparedQuery($query, [$target_file, $email], ["s", "s"]);
+  }
+
   public static function search($search){
     $search = "%" . $search . "%";
 
