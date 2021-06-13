@@ -64,13 +64,32 @@ class GoalModel extends Model {
     $queryTypes = ["s"];
 
     $whereStatements = ["username = ?"];
-
+    
     //Check for filters and if so add them
     if(isset($filters["parent_id"])){
       $whereStatements[] = "parent_goal_id = ?";
       $queryValues[] = intval($filters["parent_id"]);
       $queryTypes[] = "i";
     }
+    
+    if(isset($filters["min_end_date"])){
+      $whereStatements[] = "end_date >= ?";
+      $queryValues[] = $filters["min_end_date"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["max_end_date"])){
+      $whereStatements[] = "end_date <= ?";
+      $queryValues[] = $filters["max_end_date"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["type"])){
+      $whereStatements[] = "type = ?";
+      $queryValues[] = $filters["type"];
+      $queryTypes[] = "s";
+    }
+
     
     //Check if where is filled and if so create sql for it
     if(!empty($whereStatements)){
