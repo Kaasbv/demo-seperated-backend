@@ -19,6 +19,7 @@ class GoalModel extends Model {
   public string $end_date;
   public string $date_created;
   public string $date_updated;
+  public string $date_finished;
 
   public function create(){
     $query = "
@@ -35,8 +36,9 @@ class GoalModel extends Model {
       $this->type,
       $this->status,
       $this->start_date,
-      $this->end_date
-    ], ["s", "i", "s", "i", "s", "s", "s", "s"]);
+      $this->end_date,
+      $this->date_finished
+    ], ["s", "i", "s", "i", "s", "s", "s", "s", "s"]);
   }
 
   public static function getByGoalId($ID_goal){
@@ -71,6 +73,43 @@ class GoalModel extends Model {
       $queryValues[] = intval($filters["parent_id"]);
       $queryTypes[] = "i";
     }
+    
+    if(isset($filters["min_end_date"])){
+      $whereStatements[] = "end_date >= ?";
+      $queryValues[] = $filters["min_end_date"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["max_end_date"])){
+      $whereStatements[] = "end_date <= ?";
+      $queryValues[] = $filters["max_end_date"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["min_date_finished"])){
+      $whereStatements[] = "date_finished >= ?";
+      $queryValues[] = $filters["min_date_finished"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["max_date_finished"])){
+      $whereStatements[] = "date_finished <= ?";
+      $queryValues[] = $filters["max_date_finished"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["status"])){
+      $whereStatements[] = "status = ?";
+      $queryValues[] = $filters["status"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["type"])){
+      $whereStatements[] = "type = ?";
+      $queryValues[] = $filters["type"];
+      $queryTypes[] = "s";
+    }
+
     
     //Check if where is filled and if so create sql for it
     if(!empty($whereStatements)){
