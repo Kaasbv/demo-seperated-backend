@@ -7,11 +7,29 @@ include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 class FollowerFollow {
   public static function run(){
     session_start();
+    if(!isset($_SESSION['username'])) {
+      http_response_code(403);
+      echo "Session doesn't exist";
+      exit;
+    }
+
     //Start een connectie
     MysqlHelper::startConnection();
 
     //Zet hier je code neer
-    
+    $follow = new FollowerModel($_SESSION["username"], $_POST["username"]);
+
+    try {
+      $follow->create();
+    }
+
+    catch (Exception $e) {
+      http_response_code(500);
+      echo $e->getMessage();
+      exit;
+    }
+  
+    http_response_code(204);
 
     //Sluit de connectie
     MysqlHelper::closeConnection();
