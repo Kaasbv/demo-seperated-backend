@@ -19,6 +19,7 @@ class GoalModel extends Model {
   public string $end_date;
   public string $date_created;
   public string $date_updated;
+  public string $date_finished;
 
   public function create(){
     $query = "
@@ -81,6 +82,24 @@ class GoalModel extends Model {
     if(isset($filters["max_end_date"])){
       $whereStatements[] = "end_date <= ?";
       $queryValues[] = $filters["max_end_date"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["min_date_finished"])){
+      $whereStatements[] = "date_finished >= ?";
+      $queryValues[] = $filters["min_date_finished"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["max_date_finished"])){
+      $whereStatements[] = "date_finished <= ?";
+      $queryValues[] = $filters["max_date_finished"];
+      $queryTypes[] = "s";
+    }
+
+    if(isset($filters["status"])){
+      $whereStatements[] = "status = ?";
+      $queryValues[] = $filters["status"];
       $queryTypes[] = "s";
     }
 
