@@ -18,10 +18,17 @@ class GoalList {
     
     $goals = GoalModel::listByUsername($_SESSION["username"], $_GET);
     if(!$goals) $goals = [];
-    if(!isset($_GET["parent_id"])){
+
+    $listType = $_GET["list_type"] ?? "normal";
+
+    if($listType === "tree"){
       $tree = self::generateTree($goals);
-    }else{
+    }else if($listType === "normal"){
       $tree = $goals;
+    }else{
+      http_response_code(400);
+      echo "List type unknown";
+      exit;
     }
 
     header('Content-Type: application/json'); //Header om aan te geven dat de response json is

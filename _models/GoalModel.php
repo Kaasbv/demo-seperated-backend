@@ -65,7 +65,7 @@ class GoalModel extends Model {
     $queryTypes = ["s"];
 
     $whereStatements = ["username = ?"];
-
+    
     //Check for filters and if so add them
     if(isset($filters["parent_id"])){
       $whereStatements[] = "parent_goal_id = ?";

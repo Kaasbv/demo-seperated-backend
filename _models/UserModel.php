@@ -14,6 +14,7 @@ class UserModel extends Model {
   public string $password;
   public string $date_created;
   public string $date_updated;
+  public string $pf_path;
 
   //Check of meegegeven email al in de user tabel bestaat
   public static function checkIfMailExists($email){
@@ -140,6 +141,16 @@ class UserModel extends Model {
     } else {
       return $username;
     }
+  }
+
+  public function uploadImage($target_file){
+    $query = "
+      UPDATE User
+      SET pf_path = ?
+      WHERE email = ?
+    ";
+    
+    MysqlHelper::runPreparedQuery($query, [$target_file, $this->email], ["s", "s"]);
   }
 
   public static function search($search){
