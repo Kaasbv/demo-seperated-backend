@@ -36,9 +36,8 @@ class GoalModel extends Model {
       $this->type,
       $this->status,
       $this->start_date,
-      $this->end_date,
-      $this->date_finished
-    ], ["s", "i", "s", "i", "s", "s", "s", "s", "s"]);
+      $this->end_date
+    ], ["s", "i", "s", "i", "s", "s", "s", "s"]);
   }
 
   public static function getByGoalId($ID_goal){
