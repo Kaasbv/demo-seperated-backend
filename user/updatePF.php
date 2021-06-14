@@ -23,6 +23,13 @@ class UserUpload {
     //Variabele voor grootte afbeelding
     $imagesize = $_FILES["fileToUpload"]['size'];
     
+    //First check size
+    if ($imagesize > 5042880 || $imagesize === 0) {
+      http_response_code(400);
+      echo "file too large"; 
+      exit;
+    } 
+    
     //Bestandstype afbeeldingen bepalen en checken
     switch(exif_imagetype($_FILES['fileToUpload']['tmp_name'])){
       case IMAGETYPE_GIF:
@@ -39,34 +46,25 @@ class UserUpload {
         break;
       default:
         http_response_code(400);
-        echo "Sorry, you used a trash image format <br/><br/>Please upload a gif, png or jpg instead :)";
+        echo "invalid extension";
         exit;
     }
     
-    //Check het bestandstype van de afbeelding
-    if ($imagesize > 5242880) {
-      http_response_code(400);
-      echo "Sorry, your 'file' is too large ;)"; 
-      exit;
+    //Maak locatie voor de file aan met willekeurige string
+    $randomstring = bin2hex(random_bytes(30));
+    $target_dir = "uploads/images/";
+    $target_file = $target_dir . $randomstring . "_profile.$imagetype";
+    
+    //Schrijf de image weg naar schijf
+    $image = $_FILES["fileToUpload"]["tmp_name"];
+    move_uploaded_file($image, $target_file);
 
-    } else {
-      //Maak locatie voor de file aan met willekeurige string
-      $randomstring = bin2hex(random_bytes(30));
-      $target_dir = "uploads/images/";
-      $target_file = $target_dir . $randomstring . "_profile.$imagetype";
-      
-      //Schrijf de image weg naar schijf
-      $image = $_FILES["fileToUpload"]["tmp_name"];
-      move_uploaded_file($image, $target_file);
-
-      //Start een connectie en zet het pad van de afbeelding in de database
-      MysqlHelper::startConnection();
-      $usermodel = UserModel::getByUserName($user);
-      $usermodel->uploadImage($target_file);
-      MysqlHelper::closeConnection();
-      echo 'Uploaded';
-    }
-
+    //Start een connectie en zet het pad van de afbeelding in de database
+    MysqlHelper::startConnection();
+    $usermodel = UserModel::getByUserName($user);
+    $usermodel->uploadImage($target_file);
+    MysqlHelper::closeConnection();
+    echo 'Uploaded';
   }
 }
 

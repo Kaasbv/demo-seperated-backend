@@ -7,14 +7,15 @@ include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 class UserUpdate {
   public static function run(){
     session_start();
-    //Zet gebruikersnaam ingelogde gebruiker in variabele
-    $user = $_SESSION['username'];
     //Check of de sessie bestaat
-    if(!isset($user)) {
-      http_response_code(403);
+    if(!isset($_SESSION['username'])) {
+      http_response_code(401);
       echo "Session doesn't exist";
       exit;
     }
+    
+    //Zet gebruikersnaam ingelogde gebruiker in variabele
+    $user = $_SESSION['username'];
 
     //Start een connectie
     MysqlHelper::startConnection();
