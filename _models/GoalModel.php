@@ -13,7 +13,7 @@ class GoalModel extends Model {
 
   public int $ID_goal;
   public int $parent_goal_id = 1; //Default oppergoal
-  public int $kudos = 0;
+  public int $kudos = 10;
   public string $status = "todo";
   public string $start_date = "1970-1-1";
   public string $end_date;
@@ -111,6 +111,12 @@ class GoalModel extends Model {
     }
 
     return $objectArray;
+  }
+
+  //Update een goal
+  public function update()
+  {
+    
   }
 }
 
