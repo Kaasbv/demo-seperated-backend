@@ -55,6 +55,23 @@ class GoalModel extends Model {
     return $object;
   }
 
+  //Een variatie van getByGoalId om te voorkomen dat niet iemand anders zijn goals worden bewerkt.
+  public static function getByGoalIdByUsername($ID_goal, $username){
+    $query = "
+      SELECT * FROM Goal
+      WHERE ID_goal = ? AND username = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$ID_goal, $username], ["s", "s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
+    $object = new GoalModel($data["username"], $data["name"], $data["type"] ?? "");
+    self::fillObject($object, $data);
+
+    return $object;
+  }
+
   public static function listByUsername($username, $filters) {
     $query = "
         SELECT * FROM Goal

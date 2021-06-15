@@ -5,8 +5,8 @@ require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 //Maak een class aan voor deze api call
 class GoalUpdate {
   //Maak onderscheid tussn vereiste en optionele attributen.
-  static array $requiredKeys = [];
-  static array $nonRequiredKeys = ["goal_id", "username", "name", "type", "end_date", "kudos" ,"parent_goal_id", "start_data"];
+  static array $requiredKeys = ["ID_goal"];
+  static array $nonRequiredKeys = ["name", "type", "status", "end_date"];
 
 
   public static function run()
@@ -26,6 +26,7 @@ class GoalUpdate {
     }
 
     //check if a key is not allowed
+    $allKeys = array_merge(self::$requiredKeys, self::$nonRequiredKeys);
     foreach($_POST as $key => $value){
       if(!in_array($key, $allKeys)){
         $response = ["message" => "This key is not allowed: {$key}"];
@@ -35,20 +36,21 @@ class GoalUpdate {
       }
     }
 
-    //Model ophalen
-    $goal_edit = GoalModel::getByGoalID($_POST['goal_id']);
+    //Model ophalen en checken of ID_goal bestaad
+    $goal_edit = GoalModel::getByGoalIDByUsername($_POST['ID_goal'], $_SESSION['username']);
 
     //Checken of het opgehaalde model valide is
     if(!$goal_edit){
       http_response_code(404);
       exit;
     }
+    var_dump($goal_edit);
 
     //Aangepaste waarde editen in het opgehaalde model
-    $goal_edit->edit()
+    //$goal_edit->edit();
 
     //Goal updaten
-    $goal_edit->update();
+    //$goal_edit->update();
   
     //Sluit de connectie
     MysqlHelper::closeConnection();
