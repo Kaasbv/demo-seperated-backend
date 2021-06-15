@@ -1,7 +1,7 @@
 <?php
 //Include de 2 bestanden die wij nodig hebben
-include_once(__DIR__ . "/../_models/ProductModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/ProductModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 
 //Maak een class aan voor deze api call

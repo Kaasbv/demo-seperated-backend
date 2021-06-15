@@ -1,8 +1,8 @@
 <?php
 //Include de 2 bestanden die wij nodig hebben
-include_once(__DIR__ . "/../_models/CategoryModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
-include_once(__DIR__ . "/../_models/UserModel.php");
+require_once(__DIR__ . "/../_models/CategoryModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/UserModel.php");
 
 //Maak een class aan voor deze api call
 class CategoryList {

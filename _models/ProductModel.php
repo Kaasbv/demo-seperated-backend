@@ -1,6 +1,6 @@
 <?php
 //Include de bestande de wij nodig hebben
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 class ProductModel {
   public string $productCode;

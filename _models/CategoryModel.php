@@ -1,7 +1,7 @@
 <?php
 //Include de bestanden de wij nodig hebben
-include_once(__DIR__ . "/../_models/Model.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/Model.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 class CategoryModel extends Model {
   

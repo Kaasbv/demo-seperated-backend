@@ -1,6 +1,6 @@
 <?php
-include_once(__DIR__ . "/../_models/AttributeModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/AttributeModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 class AttributeChange {
   public static function run(){

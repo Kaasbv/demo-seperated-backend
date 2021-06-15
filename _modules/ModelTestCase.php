@@ -2,8 +2,8 @@
 use PHPUnit\Framework\TestCase;
 
 //Include classes
-include_once(__DIR__ . "/../_models/UserModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/UserModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 
 class ModelTestCase extends TestCase

@@ -1,7 +1,7 @@
 <?php
 //Maak de benodigde includes
-include_once(__DIR__ . "/../_models/UserModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/UserModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 //Maak een class aan
 class UserUpload {

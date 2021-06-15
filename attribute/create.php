@@ -1,7 +1,7 @@
 <?php
-include_once(__DIR__ . "/../_models/AttributeModel.php");
-include_once(__DIR__ . "/../_models/GoalModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_models/AttributeModel.php");
+require_once(__DIR__ . "/../_models/GoalModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 class AttributeCreate {
   public static function run(){

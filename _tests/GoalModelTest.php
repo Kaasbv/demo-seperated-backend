@@ -1,8 +1,8 @@
 <?php
 //Include classes
-include_once(__DIR__ . "/../_models/GoalModel.php");
-include_once(__DIR__ . "/../_helpers/MysqlHelper.php");
-include_once(__DIR__ . "/../_modules/ModelTestCase.php");
+require_once(__DIR__ . "/../_models/GoalModel.php");
+require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
+require_once(__DIR__ . "/../_modules/ModelTestCase.php");
 
 
 final class GoalModelTest extends ModelTestCase
