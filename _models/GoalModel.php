@@ -75,7 +75,7 @@ class GoalModel extends Model {
 
   public static function listByUsername($username, $filters) {
     $query = "
-        SELECT * FROM Goal
+        SELECT g.*, get_total_kudus(g.ID_goal) as totalKudos, get_percentage_done(g.ID_goal) as percentageDone FROM Goal g
     ";
 
     $queryValues = [$username];
