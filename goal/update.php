@@ -25,6 +25,13 @@ class GoalUpdate {
       exit;
     }
 
+    //Checken of er een goal_id is
+    if(!isset($_POST["ID_goal"]))
+    {
+      http_response_code(400);
+      exit;
+    }
+
     //check if a key is not allowed
     $allKeys = array_merge(self::$requiredKeys, self::$nonRequiredKeys);
     foreach($_POST as $key => $value){
@@ -44,13 +51,12 @@ class GoalUpdate {
       http_response_code(404);
       exit;
     }
-    var_dump($goal_edit);
 
     //Aangepaste waarde editen in het opgehaalde model
-    //$goal_edit->edit();
+    GoalModel::fillObject($goal_edit, $_POST);
 
     //Goal updaten
-    //$goal_edit->update();
+    $goal_edit->update();
   
     //Sluit de connectie
     MysqlHelper::closeConnection();

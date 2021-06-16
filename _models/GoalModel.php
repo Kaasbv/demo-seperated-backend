@@ -131,9 +131,21 @@ class GoalModel extends Model {
   }
 
   //Update een goal
-  public function update()
-  {
-    
+  public function update(){
+    $query = "
+      UPDATE Goal 
+      SET `name` = ?, `kudos` = ?, `type` = ?, `end_date` = ?, `status` = ?
+      WHERE `ID_goal` = ?;  
+    ";
+
+    MysqlHelper::runPreparedQuery($query, [
+      $this->name,
+      $this->kudos,
+      $this->type,
+      $this->end_date,
+      $this->status,
+      $this->ID_goal
+    ], ["s", "i", "s", "s", "s", "i"]);
   }
 }
 
