@@ -19,7 +19,7 @@ class GoalSearch {
 
     $search = $_GET['search'];
 
-    $goals = GoalModel::search($search, $_SESSION['username']);
+    $goals = !empty($search) ? GoalModel::search($search, $_SESSION['username']) : [];
 
     header('Content-Type: application/json');
     echo json_encode($goals);
