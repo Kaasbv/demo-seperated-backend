@@ -1,9 +1,10 @@
 <?PHP
+require_once(__DIR__ . "/../goal/calculator.php");
 require_once(__DIR__ . "/../_models/GoalModel.php");
 require_once(__DIR__ . "/../_helpers/MysqlHelper.php");
 
 //Maak een class aan voor deze api call
-class GoalUpdate {
+class GoalUpdate extends Calculator{
   //Maak onderscheid tussn vereiste en optionele attributen.
   static array $requiredKeys = ["ID_goal"];
   static array $nonRequiredKeys = ["name", "type", "status", "end_date"];
@@ -58,9 +59,23 @@ class GoalUpdate {
     {
       if(is_null($value) || empty($value)) unset($_POST[$key]);
     }
+    
+    //Bij het voltooien van een goal de kudos bereken
+    if($_POST["status"] === "done" && $goal_edit->status === "todo")
+    {
+      $quantityParents = 0;
+      $quantityChilds = 4;
+
+      //kudos bereken
+      $kudos = self::calculateParentPosition($quantityParents) * self::calculateChildCluster($quantityChilds);
+
+      //kudos zetten
+      $goal_edit->kudos = $kudos;
+    }
 
     //Aangepaste waarde editen in het opgehaalde model
     GoalModel::fillObject($goal_edit, $_POST);
+
 
     //Goal updaten
     $goal_edit->update();
