@@ -29,6 +29,7 @@ class GoalUpdate {
     if(!isset($_POST["ID_goal"]))
     {
       http_response_code(400);
+      echo "ID_goal is required, no ID_goal given!";
       exit;
     }
 
@@ -50,6 +51,12 @@ class GoalUpdate {
     if(!$goal_edit){
       http_response_code(404);
       exit;
+    }
+
+    //checken of een post-variabele leeg is, zo ja verwijderen uit array
+    foreach($_POST as $key => $value)
+    {
+      if(is_null($value) || empty($value)) unset($_POST[$key]);
     }
 
     //Aangepaste waarde editen in het opgehaalde model
