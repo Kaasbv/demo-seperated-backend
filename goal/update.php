@@ -72,6 +72,9 @@ class GoalUpdate extends Calculator{
 
       //kudos zetten
       $goal_edit->kudos = $kudos;
+
+      //date finished zetten
+      $goal_edit->date_finished = date("Y-m-d H:i:s"); 
     }
 
     //Aangepaste waarde editen in het opgehaalde model

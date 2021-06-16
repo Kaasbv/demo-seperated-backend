@@ -19,7 +19,7 @@ class GoalModel extends Model {
   public string $end_date;
   public string $date_created;
   public string $date_updated;
-  public string $date_finished;
+  public string $date_finished = "1970-01-01 00:00:00";
 
   public function create(){
     $query = "
@@ -176,7 +176,7 @@ class GoalModel extends Model {
   public function update(){
     $query = "
       UPDATE Goal 
-      SET `name` = ?, `kudos` = ?, `type` = ?, `end_date` = ?, `status` = ?
+      SET `name` = ?, `kudos` = ?, `type` = ?, `end_date` = ?, `status` = ?, `date_finished` = ?
       WHERE `ID_goal` = ?;  
     ";
 
@@ -186,8 +186,9 @@ class GoalModel extends Model {
       $this->type,
       $this->end_date,
       $this->status,
-      $this->ID_goal
-    ], ["s", "i", "s", "s", "s", "i"]);
+      $this->date_finished,
+      $this->ID_goal,
+    ], ["s", "i", "s", "s", "s", "s", "i"]);
   }
 
   //Totaal aantal parents van het huidige goal ophalen
