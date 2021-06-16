@@ -51,6 +51,7 @@ class GoalUpdate extends Calculator{
     //Checken of het opgehaalde model valide is
     if(!$goal_edit){
       http_response_code(404);
+      echo 'hiero';
       exit;
     }
 
@@ -63,8 +64,8 @@ class GoalUpdate extends Calculator{
     //Bij het voltooien van een goal de kudos bereken
     if($_POST["status"] === "done" && $goal_edit->status === "todo")
     {
-      $quantityParents = 0;
-      $quantityChilds = 4;
+      $quantityParents = $goal_edit->getTotalParents();
+      $quantityChilds = $goal_edit->getTotalChilderen();
 
       //kudos bereken
       $kudos = self::calculateParentPosition($quantityParents) * self::calculateChildCluster($quantityChilds);

@@ -189,6 +189,27 @@ class GoalModel extends Model {
       $this->ID_goal
     ], ["s", "i", "s", "s", "s", "i"]);
   }
+
+  //Totaal aantal parents van het huidige goal ophalen
+  public function getTotalParents()
+  {
+    //Een query die een stored function van de db aanroept
+    $query = "SELECT get_amount_parents(ID_goal) AS amount FROM Goal WHERE ID_goal = ?;";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$this->ID_goal], ["i"]);
+    return $response[0]["amount"];
+  }
+
+  //Totaal aantal childs van het huidige goal ophalen
+  public function getTotalChilderen()
+  {
+    //Een query die een stored function van de db aanroept
+    $query = "SELECT get_amount_children(ID_goal) AS amount FROM Goal WHERE ID_goal = ?;";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$this->ID_goal], ["i"]);
+    return $response[0]["amount"];
+  }
+
 }
 
 ?>
