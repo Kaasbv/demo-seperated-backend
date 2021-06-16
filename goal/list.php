@@ -8,7 +8,7 @@ class GoalList {
   public static function run(){
     session_start();
     if(!isset($_SESSION['username'])) {
-      http_response_code(403);
+      http_response_code(401);
       echo "Session doesn't exist";
       exit;
     }
