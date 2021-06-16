@@ -70,6 +70,8 @@ class GoalUpdate extends Calculator{
       //kudos bereken
       $kudos = self::calculateParentPosition($quantityParents) * self::calculateChildCluster($quantityChilds);
 
+      if($kudos === 0) $kudos = 10; 
+
       //kudos zetten
       $goal_edit->kudos = $kudos;
 
