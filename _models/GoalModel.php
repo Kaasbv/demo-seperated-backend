@@ -13,7 +13,7 @@ class GoalModel extends Model {
 
   public int $ID_goal;
   public int $parent_goal_id = 1; //Default oppergoal
-  public int $kudos = 0;
+  public int $kudos = 10;
   public string $status = "todo";
   public string $start_date = "1970-1-1";
   public string $end_date;
@@ -47,6 +47,23 @@ class GoalModel extends Model {
     ";
 
     $response = MysqlHelper::runPreparedQuery($query, [$ID_goal], ["s"]);
+    if(empty($response)) return false;
+    [$data] = $response;
+
+    $object = new GoalModel($data["username"], $data["name"], $data["type"] ?? "");
+    self::fillObject($object, $data);
+
+    return $object;
+  }
+
+  //Een variatie van getByGoalId om te voorkomen dat niet iemand anders zijn goals worden bewerkt.
+  public static function getByGoalIdByUsername($ID_goal, $username){
+    $query = "
+      SELECT * FROM Goal
+      WHERE ID_goal = ? AND username = ?
+    ";
+
+    $response = MysqlHelper::runPreparedQuery($query, [$ID_goal, $username], ["s", "s"]);
     if(empty($response)) return false;
     [$data] = $response;
 
@@ -130,6 +147,24 @@ class GoalModel extends Model {
     }
 
     return $objectArray;
+  }
+
+  //Update een goal
+  public function update(){
+    $query = "
+      UPDATE Goal 
+      SET `name` = ?, `kudos` = ?, `type` = ?, `end_date` = ?, `status` = ?
+      WHERE `ID_goal` = ?;  
+    ";
+
+    MysqlHelper::runPreparedQuery($query, [
+      $this->name,
+      $this->kudos,
+      $this->type,
+      $this->end_date,
+      $this->status,
+      $this->ID_goal
+    ], ["s", "i", "s", "s", "s", "i"]);
   }
 }
 
