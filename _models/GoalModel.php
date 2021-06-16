@@ -149,6 +149,29 @@ class GoalModel extends Model {
     return $objectArray;
   }
 
+
+  public static function search($search, $username){
+    $search = "%" . $search . "%";
+
+    $query = "
+      SELECT * FROM Goal
+      WHERE name LIKE ? AND username = ? 
+    ";
+
+    $results = MysqlHelper::runPreparedQuery($query, [$search, $username], ["s", "s"]);
+
+    $models = [];
+
+    foreach($results as $row){
+      $model = new GoalModel($row["username"], $row["name"], $row["type"] ?? "");
+      self::fillObject($model, $row);
+
+      array_push($models, $model);
+    }
+
+    return $models;
+  }
+
   //Update een goal
   public function update(){
     $query = "
