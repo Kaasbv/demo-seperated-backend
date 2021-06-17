@@ -25,7 +25,7 @@ class Calculator {
 
     foreach($cluster_array as $key => $value)
     {
-      if($value[0] >= $quantity && $value[1] <= $quantity) return ++$key;
+      if($value[0] <= $quantity && $value[1] >= $quantity) return ++$key;
     }
   }
 }
