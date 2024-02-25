@@ -64,8 +64,8 @@ class MysqlHelper {
       return (object)[
         "databaseUsername" => $_ENV["USERNAME"],
         "databasePassword" => $_ENV["PASSWORD"],
-        "databaseName" => $_ENV["NAME"],
-        "databaseHost" => $_ENV["HOST"],
+        "databaseName" => $_ENV["DB_NAME"],
+        "databaseHost" => $_ENV["DB_HOST"],
       ];
     }
     //Check of de credentialfile is aangemaakt
