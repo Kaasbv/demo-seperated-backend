@@ -2,13 +2,19 @@
 FROM php:7.4-apache
 
 # Copy the current directory contents into the container at /app
-COPY . /var/www/html
+
+RUN mkdir -p /var/www/html/api
+
+COPY . /var/www/html/api
 
 # Set the working directory
-WORKDIR /var/www/html
+WORKDIR /var/www/html/api
 
 # Install mysqli
 RUN docker-php-ext-install mysqli
+
+# Create a file
+RUN echo "api" > /var/www/html/index.html
 
 # Expose port 80
 EXPOSE 80
