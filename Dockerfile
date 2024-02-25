@@ -13,6 +13,10 @@ WORKDIR /var/www/html/api
 # Install mysqli
 RUN docker-php-ext-install mysqli
 
+# Install exif and other image processing libraries
+RUN docker-php-ext-install exif
+
+
 # Create a file
 RUN echo "api" > /var/www/html/index.html
 
